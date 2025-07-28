@@ -1,0 +1,104 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  password      String
+  name          String?
+  emailVerified Boolean  @default(false)
+  emailToken    String?  @unique // For email verification
+  emailTokenExpires DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Company {
+  id            String   @id @default(uuid())
+  name          String
+  vatNumber     String?
+  companyNumber String?
+  utr           String?
+  clients       Client[]
+  invoices      Invoice[]
+  expenses      Expense[]
+  settings      Setting[]
+}
+
+model Client {
+  id        String   @id @default(uuid())
+  companyId String
+  name      String
+  email     String?
+  phone     String?
+  address   String?
+  company   Company  @relation(fields: [companyId], references: [id])
+  invoices  Invoice[]
+}
+
+model Invoice {
+  id            String   @id @default(uuid())
+  companyId     String
+  clientId      String
+  invoiceDate   DateTime
+  dueDate       DateTime
+  description   String?
+  subtotal      Float
+  vat           Float
+  total         Float
+  company       Company  @relation(fields: [companyId], references: [id])
+  client        Client   @relation(fields: [clientId], references: [id])
+  lineItems     LineItem[]
+}
+
+model LineItem {
+  id          String   @id @default(uuid())
+  invoiceId   String
+  description String
+  quantity    Float
+  unitPrice   Float
+  vatType     String
+  vatAmount   Float
+  lineTotal   Float
+  invoice     Invoice  @relation(fields: [invoiceId], references: [id])
+}
+
+model Expense {
+  id          String   @id @default(uuid())
+  companyId   String
+  date        DateTime
+  amount      Float
+  category    String
+  description String?
+  receiptUrl  String?
+  mileage     Float?   // For mileage claims
+  vehicleType String?  // car, van, motorcycle, bike
+  company     Company  @relation(fields: [companyId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Setting {
+  id          String   @id @default(uuid())
+  companyId   String
+  key         String   // e.g., "logo_url", "vat_number", "tax_code"
+  value       String   // The actual setting value
+  company     Company  @relation(fields: [companyId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([companyId, key]) // One setting per key per company
+}    

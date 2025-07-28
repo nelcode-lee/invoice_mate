@@ -1,0 +1,17 @@
+🚀 UK Invoice App API running on port 3000
+📊 Health check: http://localhost:3000/health
+🔐 Auth endpoints: http://localhost:3000/api/auth
+🏢 Company endpoints: http://localhost:3000/api/companies
+👥 Client endpoints: http://localhost:3000/api/clients
+📄 Invoice endpoints: http://localhost:3000/api/invoices
+💰 Expense endpoints: http://localhost:3000/api/expenses
+⚙️ Settings endpoints: http://localhost:3000/api/settings
+prisma:query SELECT "public"."User"."id", "public"."User"."email", "public"."User"."password", "public"."User"."name", "public"."User"."emailVerified", "public"."User"."emailToken", "public"."User"."emailTokenExpires", "public"."User"."createdAt", "public"."User"."updatedAt" FROM "public"."User" WHERE ("public"."User"."email" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query INSERT INTO "public"."User" ("id","email","password","name","emailVerified","emailToken","emailTokenExpires","createdAt","updatedAt") VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING "public"."User"."id", "public"."User"."email", "public"."User"."name", "public"."User"."emailVerified", "public"."User"."createdAt"
+prisma:query SELECT "public"."User"."id", "public"."User"."email", "public"."User"."password", "public"."User"."name", "public"."User"."emailVerified", "public"."User"."emailToken", "public"."User"."emailTokenExpires", "public"."User"."createdAt", "public"."User"."updatedAt" FROM "public"."User" WHERE ("public"."User"."email" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT 1
+prisma:query SELECT "public"."User"."id", "public"."User"."email", "public"."User"."password", "public"."User"."name", "public"."User"."emailVerified", "public"."User"."emailToken", "public"."User"."emailTokenExpires", "public"."User"."createdAt", "public"."User"."updatedAt" FROM "public"."User" WHERE ("public"."User"."email" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."User"."id", "public"."User"."email", "public"."User"."password", "public"."User"."name", "public"."User"."emailVerified", "public"."User"."emailToken", "public"."User"."emailTokenExpires", "public"."User"."createdAt", "public"."User"."updatedAt" FROM "public"."User" WHERE ("public"."User"."email" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."User"."id", "public"."User"."email", "public"."User"."password", "public"."User"."name", "public"."User"."emailVerified", "public"."User"."emailToken", "public"."User"."emailTokenExpires", "public"."User"."createdAt", "public"."User"."updatedAt" FROM "public"."User" WHERE ("public"."User"."email" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:query SELECT "public"."User"."id", "public"."User"."email", "public"."User"."password", "public"."User"."name", "public"."User"."emailVerified", "public"."User"."emailToken", "public"."User"."emailTokenExpires", "public"."User"."createdAt", "public"."User"."updatedAt" FROM "public"."User" WHERE ("public"."User"."email" = $1 AND 1=1) LIMIT $2 OFFSET $3
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }

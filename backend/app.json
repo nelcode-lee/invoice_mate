@@ -1,0 +1,28 @@
+{
+  "name": "invoice-mate-backend",
+  "description": "UK Invoice App Backend API",
+  "repository": "https://github.com/yourusername/invoice-mate",
+  "keywords": ["node", "express", "invoice", "uk", "vat"],
+  "env": {
+    "DATABASE_URL": {
+      "description": "PostgreSQL database URL",
+      "required": true
+    },
+    "JWT_SECRET": {
+      "description": "Secret key for JWT tokens",
+      "required": true
+    },
+    "NODE_ENV": {
+      "description": "Environment",
+      "value": "production"
+    }
+  },
+  "addons": [
+    "heroku-postgresql"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+} 
