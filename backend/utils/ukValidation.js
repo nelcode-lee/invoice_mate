@@ -85,15 +85,18 @@ const schemas = {
   createClient: Joi.object({
     companyId: Joi.string().uuid().required(),
     name: Joi.string().required().min(1).max(100),
+    contactPerson: Joi.string().optional().max(100),
     email: Joi.string().email().optional(),
     phone: Joi.string().optional(),
     address: Joi.string().optional(),
-    postcode: Joi.string().optional().custom((value, helpers) => {
-      if (value && !ukValidation.validatePostcode(value).isValid) {
+    vatNumber: Joi.string().optional().custom((value, helpers) => {
+      if (value && !ukValidation.validateVATNumber(value).isValid) {
         return helpers.error('any.invalid');
       }
       return value;
-    })
+    }),
+    notes: Joi.string().optional().allow('').max(500),
+    status: Joi.string().valid('active', 'inactive').default('active')
   }),
 
   createInvoice: Joi.object({
@@ -111,6 +114,7 @@ const schemas = {
   }),
 
   createExpense: Joi.object({
+    companyId: Joi.string().uuid().required(),
     date: Joi.date().required(),
     amount: Joi.number().positive().required(),
     category: Joi.string().required(),

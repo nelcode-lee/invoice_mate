@@ -39,14 +39,20 @@ model Company {
 }
 
 model Client {
-  id        String   @id @default(uuid())
-  companyId String
-  name      String
-  email     String?
-  phone     String?
-  address   String?
-  company   Company  @relation(fields: [companyId], references: [id])
-  invoices  Invoice[]
+  id            String   @id @default(uuid())
+  companyId     String
+  name          String
+  contactPerson String?  // Contact person name
+  email         String?
+  phone         String?
+  address       String?
+  vatNumber     String?  // Client's VAT number
+  notes         String?  // Additional notes about the client
+  status        String   @default("active") // active, inactive
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  company       Company  @relation(fields: [companyId], references: [id])
+  invoices      Invoice[]
 }
 
 model Invoice {
@@ -59,6 +65,7 @@ model Invoice {
   subtotal      Float
   vat           Float
   total         Float
+  status        String   @default("PENDING") // PENDING, SENT, PAID, OVERDUE
   company       Company  @relation(fields: [companyId], references: [id])
   client        Client   @relation(fields: [clientId], references: [id])
   lineItems     LineItem[]

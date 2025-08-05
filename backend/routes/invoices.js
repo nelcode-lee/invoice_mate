@@ -12,15 +12,29 @@ router.use(authenticateToken);
 // Get all invoices for a company
 router.get('/', async (req, res) => {
   try {
-    const { companyId } = req.query;
+    const { companyId, startDate, endDate } = req.query;
     
     if (!companyId) {
       // Return empty array instead of error for development
       return res.json({ invoices: [] });
     }
 
+    // Build where clause
+    const whereClause = { companyId };
+    
+    // Add date filtering if provided
+    if (startDate || endDate) {
+      whereClause.invoiceDate = {};
+      if (startDate) {
+        whereClause.invoiceDate.gte = new Date(startDate);
+      }
+      if (endDate) {
+        whereClause.invoiceDate.lte = new Date(endDate);
+      }
+    }
+
     const invoices = await prisma.invoice.findMany({
-      where: { companyId },
+      where: whereClause,
       include: {
         client: {
           select: {
@@ -283,6 +297,37 @@ router.get('/vat-breakdown/:companyId', async (req, res) => {
   } catch (error) {
     console.error('VAT breakdown error:', error);
     res.status(500).json({ error: 'Failed to get VAT breakdown' });
+  }
+});
+
+// Update invoice status
+router.patch('/:id/status', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    // Validate status
+    const validStatuses = ['PENDING', 'SENT', 'PAID', 'OVERDUE'];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ error: 'Invalid status. Must be one of: PENDING, SENT, PAID, OVERDUE' });
+    }
+
+    const updatedInvoice = await prisma.invoice.update({
+      where: { id },
+      data: { status },
+      include: {
+        client: true,
+        lineItems: true
+      }
+    });
+
+    res.json({
+      message: 'Invoice status updated successfully',
+      invoice: updatedInvoice
+    });
+  } catch (error) {
+    console.error('Update invoice status error:', error);
+    res.status(500).json({ error: 'Failed to update invoice status' });
   }
 });
 

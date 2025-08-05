@@ -1,10 +1,45 @@
 const express = require('express');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
 const prisma = require('../lib/prisma');
 const { authenticateToken } = require('../middleware/auth');
 const { schemas } = require('../utils/ukValidation');
 const { vatCalculation } = require('../utils/vatCalculation');
 
 const router = express.Router();
+
+// Configure multer for file uploads
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const uploadDir = path.join(__dirname, '../uploads/receipts');
+    // Create directory if it doesn't exist
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
+    cb(null, uploadDir);
+  },
+  filename: function (req, file, cb) {
+    // Generate unique filename
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, 'receipt-' + uniqueSuffix + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024 // 5MB limit
+  },
+  fileFilter: function (req, file, cb) {
+    // Accept only image files
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only image files are allowed'), false);
+    }
+  }
+});
 
 router.use(authenticateToken);
 
@@ -76,33 +111,45 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Create expense
-router.post('/', async (req, res) => {
+// Create expense (with optional file upload)
+router.post('/', upload.single('receipt'), async (req, res) => {
   try {
-    const { error, value } = schemas.createExpense.validate(req.body);
-    if (error) {
-      return res.status(400).json({ error: error.details[0].message });
+    // Handle both JSON and form data
+    const expenseData = req.body;
+    
+    // Validate required fields
+    const { companyId, date, amount, category, description } = expenseData;
+    const { mileage, vehicleType } = expenseData;
+    
+    if (!companyId || !date || !amount || !category || !description) {
+      return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    const { companyId, date, amount, category, description, mileage, vehicleType } = value;
-
     // Calculate mileage expense if applicable
-    let finalAmount = amount;
+    let finalAmount = parseFloat(amount);
     if (mileage && vehicleType) {
-      const mileageAmount = vatCalculation.calculateMileageExpense(mileage, vehicleType);
+      const mileageAmount = vatCalculation.calculateMileageExpense(parseFloat(mileage), vehicleType);
       finalAmount = mileageAmount;
     }
 
+    // Prepare expense data
+    const expenseCreateData = {
+      companyId,
+      date: new Date(date),
+      amount: finalAmount,
+      category,
+      description,
+      ...(mileage && { mileage: parseFloat(mileage) }),
+      ...(vehicleType && { vehicleType })
+    };
+
+    // Add receipt URL if file was uploaded
+    if (req.file) {
+      expenseCreateData.receiptUrl = `/uploads/receipts/${req.file.filename}`;
+    }
+
     const expense = await prisma.expense.create({
-      data: {
-        companyId,
-        date: new Date(date),
-        amount: finalAmount,
-        category,
-        description,
-        mileage,
-        vehicleType
-      }
+      data: expenseCreateData
     });
 
     res.status(201).json({
