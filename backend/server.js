@@ -72,13 +72,14 @@ app.use('/*', (req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 UK Invoice App API running on port ${PORT}`);
-  console.log(`📊 Health check: http://localhost:${PORT}/health`);
-  console.log(`🔐 Auth endpoints: http://localhost:${PORT}/api/auth`);
-  console.log(`🏢 Company endpoints: http://localhost:${PORT}/api/companies`);
-  console.log(`👥 Client endpoints: http://localhost:${PORT}/api/clients`);
-  console.log(`📄 Invoice endpoints: http://localhost:${PORT}/api/invoices`);
-  console.log(`💰 Expense endpoints: http://localhost:${PORT}/api/expenses`);
-  console.log(`⚙️ Settings endpoints: http://localhost:${PORT}/api/settings`);
+  console.log(`📊 Health check: http://0.0.0.0:${PORT}/health`);
+  console.log(`🔐 Auth endpoints: http://0.0.0.0:${PORT}/api/auth`);
+  console.log(`🏢 Company endpoints: http://0.0.0.0:${PORT}/api/companies`);
+  console.log(`👥 Client endpoints: http://0.0.0.0:${PORT}/api/clients`);
+  console.log(`📄 Invoice endpoints: http://0.0.0.0:${PORT}/api/invoices`);
+  console.log(`💰 Expense endpoints: http://0.0.0.0:${PORT}/api/expenses`);
+  console.log(`⚙️ Settings endpoints: http://0.0.0.0:${PORT}/api/settings`);
+  console.log(`🌐 Accessible from: http://192.168.1.182:${PORT}`);
 }); 

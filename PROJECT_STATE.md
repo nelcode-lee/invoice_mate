@@ -1,195 +1,253 @@
-# UK Invoice App - Project State Documentation
+# InvoiceMate Project - Current State
 
-## 📅 Last Updated: July 28, 2025
+**Date**: 8th August 2025  
+**Status**: Ready for TestFlight/App Store submission  
+**Company**: Nuvaru  
+**Contact**: info@nuvaru.co.uk  
 
-## 🎯 Current Project Status
+## 📱 Project Overview
 
-### ✅ **Fully Functional Full-Stack Application**
-- **Frontend**: Single-page HTML app with responsive design
-- **Backend**: Node.js/Express API with PostgreSQL database
-- **Database**: Prisma ORM with complete schema
-- **Authentication**: JWT-based auth with email verification
+### App Details
+- **Name**: InvoiceMate
+- **Platform**: iOS (SwiftUI)
+- **Target**: UK businesses and freelancers
+- **Core Features**: UK VAT-compliant invoice generation, expense tracking, client management
 
-## 🏗️ **Architecture Overview**
+### Technical Stack
+- **Frontend**: SwiftUI
+- **Backend**: Node.js/Express (separate project)
+- **Database**: Core Data (local) + Neon Cloud (sync)
+- **PDF Generation**: UIGraphicsPDFRenderer
+- **Export**: CSV for expenses
 
-### **Frontend (UKInvoiceApp/index.html)**
-- **Location**: `/Users/admin/invoice_mate/UKInvoiceApp/index.html`
-- **Type**: Single HTML file with embedded CSS/JS
-- **Features**:
-  - Responsive mobile-first design
-  - Complete invoice management system
-  - Client management
-  - Expense tracking
-  - VAT reporting
-  - Financial reports
-  - Company setup with accounting dates
-  - PDF generation and email functionality
+## ✅ Completed Features
 
-### **Backend (Node.js/Express)**
-- **Location**: `/Users/admin/invoice_mate/backend/`
-- **Port**: 3000
-- **Database**: PostgreSQL (Neon.tech)
-- **ORM**: Prisma
-- **Key Files**:
-  - `server.js` - Main server file
-  - `prisma/schema.prisma` - Database schema
-  - `routes/` - API endpoints
-  - `middleware/` - Authentication middleware
+### Core Functionality
+- ✅ **UK Invoice Creation** with VAT calculations (20%, 5%, 0%)
+- ✅ **PDF Export** with professional formatting
+- ✅ **Client Management** with detailed views
+- ✅ **Expense Tracking** with UK accounting standards
+- ✅ **Dashboard Analytics** with revenue charts
+- ✅ **Data Persistence** using Core Data
+- ✅ **Cloud Sync** with Neon database
 
-## 🚀 **How to Restart the Project**
+### UI/UX Features
+- ✅ **Professional Design** with card-based layouts
+- ✅ **Tab Navigation** (Dashboard, Invoices, Clients, Expenses, Settings)
+- ✅ **Detail Views** for invoices, clients, and expenses
+- ✅ **Form Validation** and error handling
+- ✅ **Loading States** and progress indicators
+- ✅ **Responsive Design** for different screen sizes
 
-### **1. Start Backend Server**
-```bash
-cd /Users/admin/invoice_mate/backend
-npm install
-node server.js
+### Legal & Compliance
+- ✅ **Privacy Policy** (UK GDPR compliant)
+- ✅ **Terms of Service** (UK law compliant)
+- ✅ **In-App Access** via Settings > Legal
+- ✅ **Nuvaru Branding** throughout app
+
+### App Store Ready
+- ✅ **App Icon** (1024x1024, professional design)
+- ✅ **Privacy Policy** integrated
+- ✅ **Terms of Service** integrated
+- ✅ **No critical crashes**
+- ✅ **All core features functional**
+
+## 📁 Project Structure
+
 ```
-**Expected Output:**
+InvoiceMate/
+├── InvoiceMateiOS/InvoiceMate/InvoiceMate/
+│   ├── Views/
+│   │   ├── DashboardView.swift
+│   │   ├── InvoicesView.swift
+│   │   ├── ClientsView.swift
+│   │   ├── ExpensesView.swift
+│   │   ├── SettingsView.swift
+│   │   ├── InvoiceDetailView.swift
+│   │   ├── ClientDetailView.swift
+│   │   ├── ExpenseDetailView.swift
+│   │   ├── PrivacyPolicyView.swift
+│   │   ├── TermsOfServiceView.swift
+│   │   ├── UKInvoiceCreationView.swift
+│   │   ├── EditProfileView.swift
+│   │   └── InvoiceBrandingView.swift
+│   ├── Services/
+│   │   ├── PDFService.swift
+│   │   ├── CSVService.swift
+│   │   ├── UKVATCalculator.swift
+│   │   ├── UKValidation.swift
+│   │   └── NeonDatabaseService.swift
+│   ├── DataManager.swift
+│   ├── DataSeeder.swift
+│   └── Assets.xcassets/
+│       └── AppIcon.appiconset/
+│           └── InvoiceMate_Icon.png
+├── backend/ (separate Node.js project)
+└── Documentation/
+    ├── InvoiceMate_Privacy_Policy.md
+    ├── InvoiceMate_Terms_of_Service.md
+    └── AppStore_Checklist.md
 ```
-🚀 UK Invoice App API running on port 3000
-📊 Health check: http://localhost:3000/health
-🔐 Auth endpoints: http://localhost:3000/api/auth
-🏢 Company endpoints: http://localhost:3000/api/companies
-👥 Client endpoints: http://localhost:3000/api/clients
-📄 Invoice endpoints: http://localhost:3000/api/invoices
-💰 Expense endpoints: http://localhost:3000/api/expenses
-⚙️ Settings endpoints: http://localhost:3000/api/settings
-```
 
-### **2. Start Frontend Server**
-```bash
-cd /Users/admin/invoice_mate/UKInvoiceApp
-python3 -m http.server 8080
-```
-**Expected Output:**
-```
-Serving HTTP on :: port 8080 (http://[::]:8080/) ...
-```
+## 🎯 Current Status
 
-### **3. Access the Application**
-- **Frontend**: http://localhost:8080
-- **Backend Health Check**: http://localhost:3000/health
+### Ready for TestFlight
+- ✅ **App icon** added to Xcode
+- ✅ **Privacy policy** integrated
+- ✅ **Terms of service** integrated
+- ✅ **PDF generation** working
+- ✅ **All core features** functional
+- ✅ **No critical crashes**
 
-## 🔐 **Authentication**
+### Next Steps Required
+1. **Apple Developer Account** ($99/year)
+2. **App Store Connect** setup
+3. **Archive and upload** to TestFlight
+4. **Internal testing** on real devices
+5. **External testing** (optional)
+6. **App Store submission**
 
-### **Test Users Available:**
-1. **Email**: `ontario2801@gmail.com`
-   - **Password**: `password123`
-   - **Status**: Verified
+## 📊 Feature Details
 
-2. **Email**: `demo@example.com`
-   - **Password**: `password123`
-   - **Status**: Verified
+### Invoice Management
+- **UK VAT Compliance**: Automatic VAT calculations
+- **PDF Export**: Professional invoice generation
+- **Client Selection**: Dropdown with client list
+- **Line Items**: Add/edit/delete invoice items
+- **Total Calculation**: Automatic subtotal, VAT, total
 
-## 📊 **Database Schema**
+### Client Management
+- **Client List**: View all clients
+- **Client Details**: Professional detail view
+- **Client Statistics**: Invoice count and revenue
+- **Add/Edit**: Create and modify clients
 
-### **Main Models:**
-- **User**: Authentication and user management
-- **Company**: Business information and VAT settings
-- **Client**: Customer/client management
-- **Invoice**: Invoice creation and management
-- **LineItem**: Invoice line items
-- **Expense**: Expense tracking
-- **Setting**: Application settings
+### Expense Tracking
+- **UK Accounting Standards**: "Wholly & Exclusively for Business"
+- **CSV Export**: Export expense data
+- **Business vs Personal**: Clear categorization
+- **Accounting Period**: Track by time periods
 
-## 🎨 **Recent UI Updates**
+### Dashboard
+- **Revenue Chart**: Monthly revenue visualization
+- **Key Metrics**: Total revenue, paid/unpaid amounts
+- **Recent Activity**: Latest invoices with tap navigation
+- **Statistics**: Business overview
 
-### **Reports Screen**
-- **Location**: Financial Reports section
-- **Features**: Quarterly/Annual reports with 70% width buttons
-- **Period Selection**: 85% width filter buttons (reduced by 15%)
+### Settings
+- **Profile Management**: Edit business details
+- **Invoice Branding**: Logo and color themes
+- **Privacy Policy**: In-app access
+- **Terms of Service**: In-app access
+- **Data Management**: Load sample data, clear data
 
-### **Company Setup**
-- **Accounting Dates**: Sole trader and company options
-- **VAT Quarters**: Standard UK VAT schedules with custom options
-- **Auto-calculation**: Next VAT return due dates
+## 🔧 Technical Implementation
 
-### **Mobile Responsiveness**
-- **Button Widths**: 70% of mobile screen width
-- **Filter Buttons**: 85% width (15% reduction)
-- **Vertical Stacking**: Optimized for mobile devices
+### Data Models
+- **User**: Company details, branding preferences
+- **Client**: Contact information, business details
+- **Invoice**: Invoice data, line items, totals
+- **Expense**: Expense data, categorization
 
-## 🔧 **Technical Notes**
+### Services
+- **PDFService**: Generate professional PDF invoices
+- **CSVService**: Export expense data
+- **UKVATCalculator**: UK VAT rate calculations
+- **UKValidation**: UK-specific data validation
+- **NeonDatabaseService**: Cloud sync functionality
 
-### **PDF Generation**
-- **Library**: html2pdf.js
-- **Fallback**: html2canvas for direct image download
-- **Print-to-PDF**: Browser print functionality
+### UI Components
+- **Professional Cards**: Consistent design language
+- **Form Validation**: Real-time input validation
+- **Loading States**: Progress indicators
+- **Error Handling**: User-friendly error messages
 
-### **Email Integration**
-- **Method**: mailto: links with Web Share API
-- **Features**: Invoice PDF attachment support
+## 📱 App Store Requirements
 
-### **Database Connection**
-- **Provider**: Neon.tech PostgreSQL
-- **Connection String**: Stored in backend/.env
-- **Status**: Active and functional
+### ✅ Completed
+- **App Icon**: 1024x1024, professional design
+- **Privacy Policy**: UK GDPR compliant
+- **Terms of Service**: UK law compliant
+- **No Crashes**: Stable app
+- **Core Features**: All functional
 
-## 🚨 **Known Issues**
+### 📋 Still Needed
+- **Apple Developer Account**: $99/year
+- **App Store Screenshots**: 6.7", 6.5", 5.5" iPhone
+- **App Description**: Marketing copy
+- **Keywords**: App Store optimization
+- **TestFlight Testing**: Real device testing
 
-### **Linter Warnings**
-- CSS linter shows some warnings but doesn't affect functionality
-- These are cosmetic and don't impact the application
+## 🚀 Deployment Path
 
-### **Database Connection**
-- Occasional PostgreSQL connection drops (handled gracefully)
-- Prisma automatically reconnects
+### Phase 1: TestFlight (Immediate)
+1. Sign up for Apple Developer account
+2. Create app in App Store Connect
+3. Archive and upload first build
+4. Set up internal testing
+5. Test on real devices
+6. Collect feedback and iterate
 
-## 📝 **Development Workflow**
+### Phase 2: App Store (After Testing)
+1. Create app store assets
+2. Write app description
+3. Submit for review
+4. Launch on App Store
 
-### **Making Changes**
-1. **Frontend**: Edit `UKInvoiceApp/index.html`
-2. **Backend**: Edit files in `backend/` directory
-3. **Database**: Use Prisma migrations for schema changes
+## 💰 Investment Required
 
-### **Testing**
-1. **Backend**: `curl http://localhost:3000/health`
-2. **Frontend**: Refresh browser at `http://localhost:8080`
-3. **Database**: Check Prisma Studio or direct queries
+### Apple Developer Account
+- **Cost**: $99/year
+- **Benefits**: TestFlight, App Store submission, crash reporting
+- **Timeline**: Required for next steps
 
-## 🔄 **Version Control**
+### Optional Investments
+- **App Store Optimization**: Professional screenshots
+- **Marketing**: Website, social media
+- **Support**: Customer service tools
 
-### **Git Repository**
-- **Location**: `/Users/admin/invoice_mate/`
-- **Status**: Initialized with complete project state
-- **Commit**: "Complete project state - UK Invoice App with full stack setup"
+## 📞 Contact Information
 
-### **Backup Strategy**
-- **Git**: Version control for code changes
-- **Database**: Neon.tech provides automatic backups
-- **Environment**: .env files contain configuration
+### Development
+- **Company**: Nuvaru
+- **Email**: info@nuvaru.co.uk
+- **Address**: Nelson Street, Hull
 
-## 🎯 **Next Steps (When Returning)**
+### Technical Support
+- **GitHub**: [Repository URL]
+- **Documentation**: Complete inline documentation
+- **Testing**: Ready for TestFlight
 
-1. **Start Servers**: Follow the restart instructions above
-2. **Test Login**: Use the provided test credentials
-3. **Verify Features**: Check all screens and functionality
-4. **Database**: Ensure Prisma connection is working
-5. **Development**: Continue from the current state
+## 🎯 Success Metrics
 
-## 📞 **Support Information**
+### Technical
+- ✅ **No crashes** on launch
+- ✅ **All features** functional
+- ✅ **PDF generation** working
+- ✅ **Data persistence** confirmed
 
-### **Key Files to Check if Issues Arise:**
-- `backend/server.js` - Main server configuration
-- `backend/prisma/schema.prisma` - Database schema
-- `UKInvoiceApp/index.html` - Frontend application
-- `backend/.env` - Environment configuration
+### Business
+- **Target Market**: UK freelancers and small businesses
+- **Value Proposition**: UK-compliant invoice generation
+- **Competitive Advantage**: UK-specific features and compliance
 
-### **Common Commands:**
-```bash
-# Check server status
-curl http://localhost:3000/health
+## 📈 Future Enhancements
 
-# Check frontend
-curl http://localhost:8080
+### Potential Features
+- **Multi-currency support**
+- **Advanced reporting**
+- **Invoice templates**
+- **Payment integration**
+- **Cloud backup**
 
-# Database migrations
-cd backend && npx prisma db push
-
-# Generate Prisma client
-cd backend && npx prisma generate
-```
+### Technical Improvements
+- **Performance optimization**
+- **Offline functionality**
+- **Advanced analytics**
+- **API integrations**
 
 ---
 
-**This documentation should provide everything needed to successfully return to and continue development of the UK Invoice App project.** 
+**Project Status**: Ready for TestFlight deployment  
+**Next Action**: Apple Developer account setup  
+**Estimated Timeline**: 2-4 weeks to App Store launch 

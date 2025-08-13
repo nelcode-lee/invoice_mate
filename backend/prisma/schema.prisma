@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
@@ -15,64 +9,64 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(uuid())
-  email         String   @unique
-  password      String
-  name          String?
-  emailVerified Boolean  @default(false)
-  emailToken    String?  @unique // For email verification
+  id                String    @id @default(uuid())
+  email             String    @unique
+  password          String
+  name              String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  emailToken        String?   @unique
   emailTokenExpires DateTime?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  emailVerified     Boolean   @default(false)
 }
 
 model Company {
-  id            String   @id @default(uuid())
+  id            String    @id @default(uuid())
   name          String
-  vatNumber     String?
   companyNumber String?
   utr           String?
+  vatNumber     String?
   clients       Client[]
-  invoices      Invoice[]
   expenses      Expense[]
+  invoices      Invoice[]
   settings      Setting[]
 }
 
 model Client {
-  id            String   @id @default(uuid())
+  id            String    @id @default(uuid())
   companyId     String
   name          String
-  contactPerson String?  // Contact person name
   email         String?
   phone         String?
   address       String?
-  vatNumber     String?  // Client's VAT number
-  notes         String?  // Additional notes about the client
-  status        String   @default("active") // active, inactive
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  company       Company  @relation(fields: [companyId], references: [id])
+  contactPerson String?
+  createdAt     DateTime  @default(now())
+  notes         String?
+  status        String    @default("active")
+  updatedAt     DateTime  @updatedAt
+  vatNumber     String?
+  company       Company   @relation(fields: [companyId], references: [id])
   invoices      Invoice[]
 }
 
 model Invoice {
-  id            String   @id @default(uuid())
-  companyId     String
-  clientId      String
-  invoiceDate   DateTime
-  dueDate       DateTime
-  description   String?
-  subtotal      Float
-  vat           Float
-  total         Float
-  status        String   @default("PENDING") // PENDING, SENT, PAID, OVERDUE
-  company       Company  @relation(fields: [companyId], references: [id])
-  client        Client   @relation(fields: [clientId], references: [id])
-  lineItems     LineItem[]
+  id          String     @id @default(uuid())
+  companyId   String
+  clientId    String
+  invoiceDate DateTime
+  dueDate     DateTime
+  description String?
+  subtotal    Float
+  vat         Float
+  total       Float
+  status      String     @default("PENDING")
+  client      Client     @relation(fields: [clientId], references: [id])
+  company     Company    @relation(fields: [companyId], references: [id])
+  lineItems   LineItem[]
 }
 
 model LineItem {
-  id          String   @id @default(uuid())
+  id          String  @id @default(uuid())
   invoiceId   String
   description String
   quantity    Float
@@ -80,7 +74,7 @@ model LineItem {
   vatType     String
   vatAmount   Float
   lineTotal   Float
-  invoice     Invoice  @relation(fields: [invoiceId], references: [id])
+  invoice     Invoice @relation(fields: [invoiceId], references: [id])
 }
 
 model Expense {
@@ -91,21 +85,21 @@ model Expense {
   category    String
   description String?
   receiptUrl  String?
-  mileage     Float?   // For mileage claims
-  vehicleType String?  // car, van, motorcycle, bike
-  company     Company  @relation(fields: [companyId], references: [id])
+  mileage     Float?
+  vehicleType String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  company     Company  @relation(fields: [companyId], references: [id])
 }
 
 model Setting {
-  id          String   @id @default(uuid())
-  companyId   String
-  key         String   // e.g., "logo_url", "vat_number", "tax_code"
-  value       String   // The actual setting value
-  company     Company  @relation(fields: [companyId], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        String   @id @default(uuid())
+  companyId String
+  key       String
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  company   Company  @relation(fields: [companyId], references: [id])
 
-  @@unique([companyId, key]) // One setting per key per company
-}    
+  @@unique([companyId, key])
+}
